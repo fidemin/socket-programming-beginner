@@ -41,7 +41,7 @@ int main() {
 			printf("original Data: %s", sndBuffer);
 			
 			if ((n_send = sendto(sd, sndBuffer, strlen(sndBuffer), 0, (struct socketaddr* ) &s_addr, sizeof(s_addr))) < 0) {
-				fprintf(stderr, "recvfrom() error");
+				fprintf(stderr, "sendto() error");
 				exit(-3);
 			}
 
