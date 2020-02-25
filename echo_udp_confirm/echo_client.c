@@ -2,12 +2,15 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <string.h>
+#include <arpa/inet.h>
 
 int main() {
 	int sd;
-	struct sockaddr_in s_addr;
+	struct sockaddr_in s_addr, c_addr;
 	char sndBuffer[BUFSIZ];
 	int n, n_send;
+	int addr_len;
 
 	sd = socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -25,14 +28,21 @@ int main() {
 			
 			printf("original Data: %s", sndBuffer);
 			
-			if ((n_send = sendto(sd, sndBuffer, strlen(sndBuffer), 0, (struct sockaddr* ) &s_addr, sizeof(s_addr))) < 0) {
+			if ((n_send = sendto(sd, sndBuffer, strlen(sndBuffer), 0, (struct sockaddr*) &s_addr, sizeof(s_addr))) < 0) {
 				fprintf(stderr, "recvfrom() error");
 				exit(-3);
 			}
 
-			if ((n = recvfrom(sd, sndBuffer, sizeof(sndBuffer), 0, NULL, NULL)) < 0) {
+			addr_len = sizeof(c_addr);
+			if ((n = recvfrom(sd, sndBuffer, sizeof(sndBuffer), 0, (struct sockaddr*) &c_addr, &addr_len)) < 0) {
 				fprintf(stderr, "recvfrom() error");
 				exit(-3);
+			}
+
+			if (memcmp(&c_addr, &s_addr, addr_len) != 0) {
+				fprintf(stderr, "reply from %s/%d\n", 
+						inet_ntoa(c_addr.sin_addr), ntohs(c_addr.sin_port));
+				continue;
 			}
 
 			sndBuffer[n] = '\0';
