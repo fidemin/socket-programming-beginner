@@ -15,7 +15,7 @@ int main() {
     bzero(&s_addr, sizeof(s_addr));
     s_addr.sin_family = AF_INET;
     s_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    s_addr.sin_port = htons(9200);
+    s_addr.sin_port = htons(9000);
 
     if (bind(sd, (struct sockaddr *) &s_addr, sizeof(s_addr)) < 0) {
         fprintf(stderr, "bind () error");

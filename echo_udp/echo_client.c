@@ -15,7 +15,7 @@ int main() {
 	bzero(&s_addr, sizeof(s_addr));
 	s_addr.sin_family = AF_INET;
 	s_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	s_addr.sin_port = htons(9200);
+	s_addr.sin_port = htons(9000);
 
 	while (1) {
 		fprintf(stderr, "waiting\n");
@@ -31,11 +31,16 @@ int main() {
 				exit(-3);
 			}
 
+			addr_len = sizeof(s_addr);
+			if ((n = recvfrom(sd, sndBuffer, sizeof(sndBuffer), 0, NULL, NULL)) < 0) {
+				fprintf(stderr, "recvfrom() error");
+				exit(-3);
+			}
+
 			sndBuffer[n] = '\0';
 			printf("echoed Data: %s", sndBuffer);
 		}
 	
 	}
 	close(sd);
-
 }
