@@ -91,7 +91,7 @@ void read_socket(int connSock) {
 			printf("%s", rbuf);
 
 			if (strncmp(rbuf, quit, 4) == 0) {
-				kill(pid, SIGQUIT);
+				kill(getppid(), SIGQUIT);
 				break;
 			}
 		} 

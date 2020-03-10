@@ -70,7 +70,6 @@ void read_keyboard(int conn_sock) {
 			kill(pid, SIGQUIT);
 			break;
 		}
-
 	}
 }
 
@@ -85,7 +84,7 @@ void read_socket(int conn_sock) {
 			printf("%s", rbuf);
 
 			if (strncmp(rbuf, quit, 4) == 0) {
-				kill(pid, SIGQUIT);
+				kill(getppid(), SIGQUIT);
 				break;
 			}
 		} 
