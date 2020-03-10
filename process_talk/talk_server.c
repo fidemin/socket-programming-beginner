@@ -74,6 +74,7 @@ void read_keyboard(int connSock) {
 
 		if (strncmp(sbuf, quit, 4) == 0) {
 			kill(pid, SIGQUIT);
+			break;
 		}
 
 	}
