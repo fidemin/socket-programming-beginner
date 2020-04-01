@@ -1,3 +1,8 @@
 
 # compiled files
 *.out
+
+# extra
+*.log
+.DS_store
+
