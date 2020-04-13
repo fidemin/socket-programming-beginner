@@ -121,6 +121,10 @@ void do_web(int c_sock) {
 	} extensions [] = {
 		{"jpg", "image/jpeg"},
 		{"png", "image/png"},
+		{"jpeg", "image/jpeg"},
+		{"zip", "application/zip"},
+		{"htm", "text/html"},
+		{"html", "text/html"},
 		{0, 0}
 	};
 
@@ -141,7 +145,7 @@ void do_web(int c_sock) {
 	else
 		sprintf(uri, "%s%s", documentRoot, p);
 
-	strcpy(c_type, "text/html");
+	strcpy(c_type, "text/plain");
 	for (i=0; extensions[i].ext != 0; i++) {
 		len = strlen(extensions[i].ext);
 		if (!strncmp(uri+strlen(uri)-len, extensions[i].ext, len)) {
